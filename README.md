@@ -14,8 +14,7 @@ yarn add vamtiger-require
 ## Usage
 [Import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import) or [require](https://nodejs.org/api/modules.html#modules_require) a referece to [VAMTIGER Require](https://github.com/vamtiger-project/vamtiger-require):
 ```typescript
-import { VamtigerRequire } from 'vamtiger-require';
-const vamtigerRequire = require('vamtiger-require') as VamtigerRequire;
+import vamtigerRequire, { Params as RequireParams } from 'vamtiger-require';;
 ```
 or
 ```javascript
