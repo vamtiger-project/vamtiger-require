@@ -1,6 +1,6 @@
 {
     "name": "vamtiger-require",
-    "version": "0.0.3",
+    "version": "0.0.4-0",
     "description": "A parameterised module loader.",
     "main": "build",
     "scripts": {
@@ -42,7 +42,7 @@
         "vamtiger-node-typescript-commit": "latest"
     },
     "dependencies": {
-        "vamtiger-bundle-typescript": "0.0.25",
+        "vamtiger-bundle-typescript": "latest",
         "vamtiger-reference-object-path": "latest",
         "vamtiger-regex-period": "latest"
     }
