@@ -1,0 +1,40 @@
+{
+    "name": "vamtiger-require",
+    "version": "0.0.2-0",
+    "description": "A parameterised module loader.",
+    "main": "build",
+    "scripts": {
+        "test": "mocha build/test --recursive",
+        "build": "tsc",
+        "commit": "vamtigerNodeTypescriptCommit --push --publish"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/vamtiger-project/vamtiger-require.git"
+    },
+    "keywords": [
+        "vamtiger",
+        "module",
+        "loader"
+    ],
+    "author": "Vamtiger Immortalles",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/vamtiger-project/vamtiger-require/issues"
+    },
+    "homepage": "https://github.com/vamtiger-project/vamtiger-require#readme",
+    "types": "build/index.d.ts",
+    "devDependencies": {
+        "@types/chai": "^4.1.4",
+        "@types/mocha": "^5.2.5",
+        "@types/node": "^10.5.7",
+        "chai": "^4.1.2",
+        "mocha": "^5.2.0",
+        "typescript": "^3.0.1",
+        "vamtiger-node-typescript-commit": "latest"
+    },
+    "dependencies": {
+        "vamtiger-reference-object-path": "latest",
+        "vamtiger-regex-period": "latest"
+    }
+}
