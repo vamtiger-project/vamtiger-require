@@ -1,4 +1,4 @@
-export default function main({ path: requirePath, constructorParams, arguments: args, instanceArguments: instanceArgs, instanceAttribute, instanceMethod, instancePath }: Params): any;
+export default function main({ path: requirePath, constructorParams, arguments: args, instanceArguments: instanceArgs, instanceAttribute, instanceMethod, instancePath, requireArguments }: Params): any;
 export interface Params {
     path: string;
     constructorParams?: AnyObject;
@@ -6,6 +6,7 @@ export interface Params {
     instanceMethod?: string;
     instancePath?: string;
     arguments?: any[];
+    requireArguments?: string[];
     instanceArguments?: any[];
 }
 export declare enum Type {
