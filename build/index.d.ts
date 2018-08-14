@@ -1,7 +1,9 @@
-export default function main({ path: requirePath, instancePath, constructorParams, arguments: args, instanceArguments: instanceArgs }: Params): any;
+export default function main({ path: requirePath, constructorParams, arguments: args, instanceArguments: instanceArgs, instanceAttribute, instanceMethod, instancePath }: Params): any;
 export interface Params {
     path: string;
     constructorParams?: AnyObject;
+    instanceAttribute?: string;
+    instanceMethod?: string;
     instancePath?: string;
     arguments?: any[];
     instanceArguments?: any[];
