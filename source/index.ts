@@ -5,7 +5,7 @@ const referenceObjectPath = require('vamtiger-reference-object-path') as Referen
 
 const periodCharacter = '.';
 
-export default function main({ path: requirePath, constructorParams, arguments: args, instanceArguments: instanceArgs, instanceAttribute, instanceMethod, instancePath }: Params) {
+export default function main({ path: requirePath, constructorParams, arguments: args, instanceArguments: instanceArgs, instanceAttribute, instanceMethod, instancePath, requireArguments }: Params) {
     const [filePath, ...objectPaths] = requirePath.split(period);
     const objectPath = objectPaths && objectPaths.join(periodCharacter);
     const requiredModule = require(filePath);
@@ -18,6 +18,7 @@ export default function main({ path: requirePath, constructorParams, arguments: 
     let resultFunction;
 
     instanceMethod = instanceMethod || instancePath;
+    args = requireArguments && getRequiredArguments({ requireArguments }) || args;
 
     if (constructorParams) {
         result = new result(constructorParams);
@@ -28,7 +29,7 @@ export default function main({ path: requirePath, constructorParams, arguments: 
                 path: instanceMethod
             });
 
-            result = resultFunction.apply(result, instanceArgs || []);
+            result = resultFunction.apply(result, args || []);
         } else if (instanceAttribute)
             result = result[instanceAttribute];
     } else if (args && typeof args[args.length - 1] === Type.function)
@@ -39,6 +40,14 @@ export default function main({ path: requirePath, constructorParams, arguments: 
     return result;
 }
 
+function getRequiredArguments({ requireArguments }: GetRequiredArgumentsParams) {
+    const requiredArguments = requireArguments
+        .map(argument => typeof argument === 'string' ? { path: argument } : argument)
+        .map(main);
+
+    return requiredArguments;
+}
+
 export interface Params {
     path: string;
     constructorParams?: AnyObject;
@@ -46,7 +55,12 @@ export interface Params {
     instanceMethod?: string;
     instancePath?: string; // alias for instanceMethod
     arguments?: any[];
+    requireArguments?: string[];
     instanceArguments?: any[];
+}
+
+interface GetRequiredArgumentsParams {
+    requireArguments: Params['requireArguments'];
 }
 
 export enum Type {

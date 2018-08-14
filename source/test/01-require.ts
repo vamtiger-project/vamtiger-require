@@ -1,14 +1,9 @@
 
-import { resolve as resolvePath } from 'path';
 import { expect } from 'chai';
 import vamtigerRequire from '../index';
 import * as mockData from './mock-data';
+import { mockDataPath, requireArguments, callbackPath } from './mock-data';
 import { exists } from 'fs';
-
-const mockDataPath = resolvePath(
-    __dirname,
-    'mock-data'
-);
 
 describe('vamtiger-require: should reference a module', function () {
     it('absolute path', function () {
@@ -67,6 +62,30 @@ describe('vamtiger-require: should reference a module', function () {
         }
     });
 
+    it('absolute path with object path - require arguments', function () {
+        const result =  vamtigerRequire({
+            path: mockDataPath + '.testObject.nested.sum',
+            requireArguments
+        });
+        const expected = 6;
+
+        expect(result).to.be.ok;
+        expect(result).to.equal(expected);
+    });
+
+    it('absolute path with object path - require arguments', function () {
+        const result =  vamtigerRequire({
+            path: mockDataPath + '.testObject.nested.sumAsync',
+            requireArguments: requireArguments
+                .slice(0, requireArguments.length - 1)
+                .concat(callbackPath)
+        });
+        const expected = 3;
+
+        expect(result).to.be.ok;
+        expect(result).to.equal(expected);
+    });
+
     it('absolute path with object path - Constructor', function () {
         const result =  vamtigerRequire({
             path: mockDataPath + '.TestClass',
@@ -99,7 +118,7 @@ describe('vamtiger-require: should reference a module', function () {
             path: mockDataPath + '.TestClass',
             instanceMethod: 'sum',
             constructorParams: {},
-            instanceArguments: [1, 2, 3, 4, 5]
+            arguments: [1, 2, 3, 4, 5]
         });
         const expected = 15;
 
@@ -112,9 +131,22 @@ describe('vamtiger-require: should reference a module', function () {
             path: mockDataPath + '.TestClass',
             instanceMethod: 'sum',
             constructorParams: {},
-            instanceArguments: [1, 2, 3, 4, 5]
+            arguments: [1, 2, 3, 4, 5]
         });
         const expected = 15;
+
+        expect(result).to.be.ok;
+        expect(result).to.equal(expected);
+    });
+
+    it('absolute path with object path - Constructor: method (required arguments)', function () {
+        const result =  vamtigerRequire({
+            path: mockDataPath + '.TestClass',
+            instanceMethod: 'sum',
+            constructorParams: {},
+            requireArguments
+        });
+        const expected = 6;
 
         expect(result).to.be.ok;
         expect(result).to.equal(expected);
@@ -125,7 +157,7 @@ describe('vamtiger-require: should reference a module', function () {
             path: mockDataPath + '.TestClass',
             instanceMethod: 'sumAsync',
             constructorParams: {},
-            instanceArguments: [1, 2, test]
+            arguments: [1, 2, test]
         });
 
         function test(error: Error|null|undefined, callbackResult: number) {
@@ -133,5 +165,20 @@ describe('vamtiger-require: should reference a module', function () {
             expect(callbackResult).to.be.ok;
             expect(callbackResult).to.equal(3);
         }
+    });
+
+    it('absolute path with object path - Constructor: method async (required arguments)', function () {
+        const result =  vamtigerRequire({
+            path: mockDataPath + '.TestClass',
+            instanceMethod: 'sumAsync',
+            constructorParams: {},
+            requireArguments: requireArguments
+                .slice(0, requireArguments.length - 1)
+                .concat(callbackPath)
+        });
+        const expected = 3;
+
+        expect(result).to.be.ok;
+        expect(result).to.equal(expected);
     });
 })
