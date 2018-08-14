@@ -1,6 +1,6 @@
 {
     "name": "vamtiger-require",
-    "version": "0.0.8-0",
+    "version": "0.0.8",
     "description": "A parameterised module loader.",
     "main": "build",
     "scripts": {
