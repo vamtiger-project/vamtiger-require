@@ -37,7 +37,16 @@ module.exports = {
         attribute: 'test attribute',
         method: () => 'test method,
         sum: (numbers) => numbers.reduce((sum, number) => sum + number, 0),
-        sumAsync: (number1, number2, callback) => callback(null, [number1, number2].reduce((sum, number) => sum + number, 0))
+        sumAsync: (number1, number2, callback) => callback(null, [number1, number2].reduce((sum, number) => sum + number, 0)),
+        argument1: 1,
+        argument2: 2,
+        argument3: 3,
+        callback: function (error: Error, result: number) {
+            if (error)
+                throw error;
+
+            return result;
+        }
     }
 }
 */
@@ -56,6 +65,19 @@ const sum = vamtigerRequire({
     arguments: [1, 2, 3, 4, 5]
 }); // 15
 
+const sumRequiredArgs = vamtigerRequire({
+    path: 'path/to/module.test.sum',
+    requireArguments: [
+        'path/to/module.test.argument1',
+        'path/to/module.test.argument2',
+        'path/to/module.test.argument3'
+    ]
+}); // 6
+
+const attribute =  vamtigerRequire({
+    path: 'path/to/module.test.attribute'
+});
+
 const sumAsync = vamtigerRequire({
     path: 'path/to/module.test.sumAsync',
     arguments: [1, 2, handleResult]
@@ -63,9 +85,18 @@ const sumAsync = vamtigerRequire({
 function handleResult(error, result) {
     console.log(result); // 3
 }
+
+const sumAsyncRequiredArguments = vamtigerRequire({
+    path: 'path/to/module.test.sumAsync',
+    requireArguments: [
+        'path/to/module.test.argument1',
+        'path/to/module.test.argument2',
+        'path/to/module.test.callback'
+    ]
+});
 ```
 
-Classes can be referenced by specifying _*constructorParams*_ and _*instanceArguments*_.
+Classes can be referenced by specifying _*constructorParams*_ and _*arguments*_.
 ```javascript
 // path/to/module.js
 /*
@@ -110,14 +141,14 @@ const sum =  vamtigerRequire({
     path: 'path/to/module',
     instanceMethod: 'sum',
     constructorParams: {},
-    instanceArguments: [1, 2, 3, 4, 5]
+    arguments: [1, 2, 3, 4, 5]
 }); // 15
 
 const sumAsync =  vamtigerRequire({
     path: 'path/to/module',
     instanceMethod: 'sumAsync',
     constructorParams: {},
-    instanceArguments: [1, 2, handleResult]
+    arguments: [1, 2, handleResult]
 });
 function handleResult(error, result) {
     console.log(result); // 3

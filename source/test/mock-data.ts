@@ -20,7 +20,6 @@ export const testObject = {
         sum: (numbers: number[]) => numbers.reduce((sum, number) => sum + number, 0),
         sumAsync: (number1: number, number2: number, callback: Callback<number>) => callback(null, [number1, number2].reduce((sum, number) => sum + number, 0))
     },
-    requireArguments,
     argument1: 1,
     argument2: 2,
     argument3: 3
