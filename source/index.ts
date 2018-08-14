@@ -5,7 +5,7 @@ const referenceObjectPath = require('vamtiger-reference-object-path') as Referen
 
 const periodCharacter = '.';
 
-export default function main({ path: requirePath, instancePath, constructorParams, arguments: args, instanceArguments: instanceArgs }: Params) {
+export default function main({ path: requirePath, constructorParams, arguments: args, instanceArguments: instanceArgs, instanceAttribute, instanceMethod, instancePath }: Params) {
     const [filePath, ...objectPaths] = requirePath.split(period);
     const objectPath = objectPaths && objectPaths.join(periodCharacter);
     const requiredModule = require(filePath);
@@ -17,17 +17,20 @@ export default function main({ path: requirePath, instancePath, constructorParam
     let result = method || requiredModule;
     let resultFunction;
 
+    instanceMethod = instanceMethod || instancePath;
+
     if (constructorParams) {
         result = new result(constructorParams);
 
-        if (instancePath) {
+        if (instanceMethod) {
             resultFunction = referenceObjectPath({
                 object: result,
-                path: instancePath
+                path: instanceMethod
             });
 
             result = resultFunction.apply(result, instanceArgs || []);
-        }
+        } else if (instanceAttribute)
+            result = result[instanceAttribute];
     } else if (args && typeof args[args.length - 1] === Type.function)
         result = result.apply(null, args);
     else if (args)
@@ -39,7 +42,9 @@ export default function main({ path: requirePath, instancePath, constructorParam
 export interface Params {
     path: string;
     constructorParams?: AnyObject;
-    instancePath?: string;
+    instanceAttribute?: string;
+    instanceMethod?: string;
+    instancePath?: string; // alias for instanceMethod
     arguments?: any[];
     instanceArguments?: any[];
 }

@@ -80,10 +80,37 @@ describe('vamtiger-require: should reference a module', function () {
         expect(result.test).to.equal(expected);
     });
 
+    it('absolute path with object path - Constructor: attribute', function () {
+        const result =  vamtigerRequire({
+            path: mockDataPath + '.TestClass',
+            constructorParams: {
+                booya: 'kasha'
+            },
+            instanceAttribute: 'test'
+        });
+        const expected = 'params.booya: kasha';
+
+        expect(result).to.be.ok;
+        expect(result).to.equal(expected);
+    });
+
     it('absolute path with object path - Constructor: method', function () {
         const result =  vamtigerRequire({
             path: mockDataPath + '.TestClass',
-            instancePath: 'sum',
+            instanceMethod: 'sum',
+            constructorParams: {},
+            instanceArguments: [1, 2, 3, 4, 5]
+        });
+        const expected = 15;
+
+        expect(result).to.be.ok;
+        expect(result).to.equal(expected);
+    });
+
+    it('absolute path with object path - Constructor: method', function () {
+        const result =  vamtigerRequire({
+            path: mockDataPath + '.TestClass',
+            instanceMethod: 'sum',
             constructorParams: {},
             instanceArguments: [1, 2, 3, 4, 5]
         });
@@ -96,7 +123,7 @@ describe('vamtiger-require: should reference a module', function () {
     it('absolute path with object path - Constructor: method async', function () {
         const result =  vamtigerRequire({
             path: mockDataPath + '.TestClass',
-            instancePath: 'sumAsync',
+            instanceMethod: 'sumAsync',
             constructorParams: {},
             instanceArguments: [1, 2, test]
         });

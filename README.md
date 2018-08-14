@@ -98,16 +98,24 @@ const testClass = vamtigerRequire({ // instance of TestClass
 });
 testClass.test; // 'kasha'
 
+const test = vamtigerRequire({ // instance of TestClass
+    path: 'path/to/module',
+    constructorParams: {
+        booya: 'kasha'
+    },
+    instanceAttribute: 'test'
+}); // 'kasha'
+
 const sum =  vamtigerRequire({
     path: 'path/to/module',
-    instancePath: 'sum',
+    instanceMethod: 'sum',
     constructorParams: {},
     instanceArguments: [1, 2, 3, 4, 5]
 }); // 15
 
 const sumAsync =  vamtigerRequire({
     path: 'path/to/module',
-    instancePath: 'sumAsync',
+    instanceMethod: 'sumAsync',
     constructorParams: {},
     instanceArguments: [1, 2, handleResult]
 });
