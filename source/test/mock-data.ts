@@ -1,5 +1,3 @@
-import { resolve as resolvePath } from 'path';
-
 export const mockDataPath = __filename.replace('.js', '');
 
 export const requireArguments = [

@@ -39,10 +39,10 @@
         "chai": "^4.1.2",
         "mocha": "^5.2.0",
         "typescript": "^3.0.1",
+        "vamtiger-bundle-typescript": "latest",
         "vamtiger-node-typescript-commit": "latest"
     },
     "dependencies": {
-        "vamtiger-bundle-typescript": "latest",
         "vamtiger-reference-object-path": "latest",
         "vamtiger-regex-period": "latest"
     }
